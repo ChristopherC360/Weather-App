@@ -1,0 +1,36 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run watch:all",
+    "watch:all": "parallelshell \"npm run watch:scss\" \"npm run lite\"",
+    "watch:scss": "onchange \"css/*.scss\" -- npm run scss",
+    "lite": "lite-server",
+    "scss": "node-sass -o css/ css/",
+    "build": "npm run clean && npm run imagemin && npm run copyfonts && npm run usemin",
+    "clean": "rimraf dist",
+    "imagemin": "imagemin img/* -o dist/img",
+    "copyfonts": "copyfiles -f node_modules/font-awesome/fonts/* dist/fonts",
+    "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.1"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "imagemin-cli": "^6.0.0",
+    "lite-server": "^2.6.1",
+    "node-sass": "^6.0.0",
+    "onchange": "^7.1.0",
+    "parallelshell": "^3.0.2",
+    "rimraf": "^3.0.2",
+    "usemin-cli": "^0.6.0"
+  }
+}
