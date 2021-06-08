@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
 
     <!-- build:css css/main.css -->
     <link rel="stylesheet" href="node_modules\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <!-- endbuild -->
 
@@ -16,22 +18,36 @@
     <script type="module" src="js/scripts.js" defer></script>
 
 </head>
+
 <body>
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Location</h1>
-                <div class="yourLocation"></div>
-                <img class="icon" src=""></p>
+                <input type="text" id="searchLocation" placeholder="Enter City or Zip Code">
+                <button id="searchLocationBtn"><i class="fas fa-lg fa-search-location"></i></button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h2>Temperature</h2>
-                <div class="yourTemperature"></div>
-                <p class="summary"></p>
+                <button class="btn btn-light" id="getLocationBtn">Find My Location</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="row">
+                <div class="col">
+                    <h3>Location</h3>
+                    <div class="yourLocation">Chicago, Illinois</div>
+                    <img class="icon" src="http://cdn.weatherapi.com/weather/64x64/day/122.png">
+                    <span class="yourTemperature">72 F</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="summary">Partly Cloudy</p>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
