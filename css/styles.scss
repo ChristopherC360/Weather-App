@@ -14,7 +14,6 @@ body {
     background-size: cover;
 }
 
-
 .card {
     height: 325px;
     width: 325px;
@@ -24,7 +23,6 @@ body {
     padding: 50px 50px;
     border-radius: 50%;
     border-width: 0;
-    margin: 15px;
     background-image: $backgroundImage;
     background-repeat: no-repeat;
     background-size: cover;
@@ -35,4 +33,18 @@ body {
 
 .yourTemperature {
     font-size: 2em;
+}
+
+#searchLocation {
+    padding: 0.25rem 0.25rem 0.5rem;
+    border-radius: 200px;
+    border: 2px solid;
+    opacity: 0.75;
+}
+
+#searchLocationBtn,
+#getLocationBtn {
+    border-radius: 50%;
+    border: 2px solid;
+    opacity: 0.75;
 }
