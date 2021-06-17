@@ -1,5 +1,17 @@
 import { apiWord } from "./Word.js";
 
+const weekdays = new Array(
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+const currDate = new Date();
+document.querySelector(".nowDate").innerHTML = currDate.toDateString();
+const nextDay = currDate.getDay()+1;
+document.querySelector("#day1Date").innerHTML = weekdays[nextDay];
+const nextDay2 = currDate.getDay()+2;
+document.querySelector("#day2Date").innerHTML = weekdays[nextDay2];
+const nextDay3 = currDate.getDay()+3;
+document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
+
+
 document
     .getElementById("getLocationBtn")
     .addEventListener("click", getLocation);
@@ -59,7 +71,7 @@ function getLocation() {
 
         const goingPlaces = firstChar + newWord;
 
-        const nav = `${goingPlaces}${lat},${long}&aqi=no`;
+        const nav = `${goingPlaces}${lat},${long}&days=3&aqi=no`;
 
         fetch(nav)
             .then((response) => response.json())
@@ -69,13 +81,43 @@ function getLocation() {
                 ).textContent = `${data.location.name}, ${data.location.region}`;
                 document.querySelector(
                     ".yourTemperature"
-                ).textContent = `${data.current.temp_f} F`;
+                ).innerHTML = `${data.current.temp_f}<sup>&#8457;</sup>`;
+                document.querySelector(
+                    ".feelsLikeTemp"
+                ).innerHTML = `${data.current.feelslike_f}<sup>&#8457;</sup>`;
                 document.querySelector(
                     ".summary"
                 ).textContent = `${data.current.condition.text}`;
                 document.querySelector(
-                    ".icon"
-                ).src = `${data.current.condition.icon}`;
+                    ".humidity"
+                ).innerHTML = `${data.current.humidity}%`;
+                document.querySelector(
+                    ".windSpeed"
+                ).innerHTML = `${data.current.wind_mph}mph / ${data.current.wind_dir}`;
+
+                // Weather Forecast Rows
+                document.querySelector(
+                    "#day1Img"
+                ).src = `${data.forecast.forecastday[0].day.condition.icon}`;
+                document.querySelector(
+                    "#day1Temp"
+                ).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+
+                document.querySelector(
+                    "#day2Img"
+                ).src = `${data.forecast.forecastday[1].day.condition.icon}`;
+                document.querySelector(
+                    "#day2Temp"
+                ).innerHTML = `${data.forecast.forecastday[1].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+
+                document.querySelector(
+                    "#day3Img"
+                ).src = `${data.forecast.forecastday[2].day.condition.icon}`;
+                document.querySelector(
+                    "#day3Temp"
+                ).innerHTML = `${data.forecast.forecastday[2].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+
+                console.log(data);
             });
     });
 }
@@ -121,7 +163,7 @@ function searchLocation() {
 
     const goingPlaces = firstChar + newWord;
 
-    const nav = `${goingPlaces}${result}&aqi=no`;
+    const nav = `${goingPlaces}${result}&days=3&aqi=no`;
 
     fetch(nav)
         .then((response) => response.json())
@@ -131,10 +173,22 @@ function searchLocation() {
             ).textContent = `${data.location.name}, ${data.location.region}`;
             document.querySelector(
                 ".yourTemperature"
-            ).textContent = `${data.current.temp_f} F`;
+            ).innerHTML = `${data.current.temp_f}<sup>&#8457;</sup>`;
             document.querySelector(
                 ".summary"
             ).textContent = `${data.current.condition.text}`;
+            document.querySelector(
+                ".icon"
+            ).src = `${data.current.condition.icon}`;
+            document.querySelector(
+                ".feelsLikeTemp"
+            ).innerHTML = `${data.current.feelslike_f}<sup>&#8457;</sup>`;
+            document.querySelector(
+                ".humidity"
+            ).innerHTML = `${data.current.humidity}%`;
+            document.querySelector(
+                ".windSpeed"
+            ).innerHTML = `${data.current.wind_mph}mph / ${data.current.wind_dir}`;
             document.querySelector(
                 ".icon"
             ).src = `${data.current.condition.icon}`;
