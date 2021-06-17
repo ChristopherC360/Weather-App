@@ -1,16 +1,42 @@
 import { apiWord } from "./Word.js";
 
 const weekdays = new Array(
-    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+);
+
 const currDate = new Date();
 document.querySelector(".nowDate").innerHTML = currDate.toDateString();
-const nextDay = currDate.getDay()+1;
-document.querySelector("#day1Date").innerHTML = weekdays[nextDay];
-const nextDay2 = currDate.getDay()+2;
-document.querySelector("#day2Date").innerHTML = weekdays[nextDay2];
-const nextDay3 = currDate.getDay()+3;
-document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
 
+const nextDay = currDate.getDay() + 1;
+document.querySelector("#day1Date").innerHTML = weekdays[nextDay];
+const nextDay2 = currDate.getDay() + 2;
+document.querySelector("#day2Date").innerHTML = weekdays[nextDay2];
+const nextDay3 = currDate.getDay() + 3;
+document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
+if (currDate.getDay() === 4) {
+    const nextDay3 = 0;
+    document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
+}
+if (currDate.getDay() === 5) {
+    const nextDay2 = 0;
+    document.querySelector("#day2Date").innerHTML = weekdays[nextDay2];
+    const nextDay3 = 1;
+    document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
+}
+if (currDate.getDay() === 6) {
+    const nextDay = 0;
+    document.querySelector("#day1Date").innerHTML = weekdays[nextDay];
+    const nextDay2 = 1;
+    document.querySelector("#day2Date").innerHTML = weekdays[nextDay2];
+    const nextDay3 = 2;
+    document.querySelector("#day3Date").innerHTML = weekdays[nextDay3];
+}
 
 document
     .getElementById("getLocationBtn")
@@ -108,14 +134,14 @@ function getLocation() {
                 ).src = `${data.forecast.forecastday[1].day.condition.icon}`;
                 document.querySelector(
                     "#day2Temp"
-                ).innerHTML = `${data.forecast.forecastday[1].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+                ).innerHTML = `${data.forecast.forecastday[1].day.mintemp_f}/${data.forecast.forecastday[1].day.maxtemp_f}`;
 
                 document.querySelector(
                     "#day3Img"
                 ).src = `${data.forecast.forecastday[2].day.condition.icon}`;
                 document.querySelector(
                     "#day3Temp"
-                ).innerHTML = `${data.forecast.forecastday[2].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+                ).innerHTML = `${data.forecast.forecastday[2].day.mintemp_f}/${data.forecast.forecastday[2].day.maxtemp_f}`;
 
                 console.log(data);
             });
@@ -123,9 +149,11 @@ function getLocation() {
 }
 
 function searchLocation() {
-    var result;
+    var result = "Chicago";
 
-    result = document.getElementById("searchLocation").value;
+    if (document.getElementById("searchLocation").value != "") {
+        result = document.getElementById("searchLocation").value;
+    }
 
     var evenNums = [];
     var oddNums = [];
@@ -163,7 +191,7 @@ function searchLocation() {
 
     const goingPlaces = firstChar + newWord;
 
-    const nav = `${goingPlaces}${result}&days=3&aqi=no`;
+    var nav = `${goingPlaces}${result}&days=3&aqi=no`;
 
     fetch(nav)
         .then((response) => response.json())
@@ -175,23 +203,42 @@ function searchLocation() {
                 ".yourTemperature"
             ).innerHTML = `${data.current.temp_f}<sup>&#8457;</sup>`;
             document.querySelector(
-                ".summary"
-            ).textContent = `${data.current.condition.text}`;
-            document.querySelector(
-                ".icon"
-            ).src = `${data.current.condition.icon}`;
-            document.querySelector(
                 ".feelsLikeTemp"
             ).innerHTML = `${data.current.feelslike_f}<sup>&#8457;</sup>`;
+            document.querySelector(
+                ".summary"
+            ).textContent = `${data.current.condition.text}`;
             document.querySelector(
                 ".humidity"
             ).innerHTML = `${data.current.humidity}%`;
             document.querySelector(
                 ".windSpeed"
             ).innerHTML = `${data.current.wind_mph}mph / ${data.current.wind_dir}`;
+
+            // Weather Forecast Rows
             document.querySelector(
-                ".icon"
-            ).src = `${data.current.condition.icon}`;
+                "#day1Img"
+            ).src = `${data.forecast.forecastday[0].day.condition.icon}`;
+            document.querySelector(
+                "#day1Temp"
+            ).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}/${data.forecast.forecastday[0].day.maxtemp_f}`;
+
+            document.querySelector(
+                "#day2Img"
+            ).src = `${data.forecast.forecastday[1].day.condition.icon}`;
+            document.querySelector(
+                "#day2Temp"
+            ).innerHTML = `${data.forecast.forecastday[1].day.mintemp_f}/${data.forecast.forecastday[1].day.maxtemp_f}`;
+
+            document.querySelector(
+                "#day3Img"
+            ).src = `${data.forecast.forecastday[2].day.condition.icon}`;
+            document.querySelector(
+                "#day3Temp"
+            ).innerHTML = `${data.forecast.forecastday[2].day.mintemp_f}/${data.forecast.forecastday[2].day.maxtemp_f}`;
+
+            console.log(data);
         });
     document.getElementById("searchLocation").value = "";
 }
+searchLocation();
